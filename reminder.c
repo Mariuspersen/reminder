@@ -43,20 +43,13 @@ int main(int argc,char** argv) {
     for (int opt = getopt(argc,argv,":a:d:hf"); opt != -1; opt = getopt(argc,argv,":a:d:hf")) {
         switch(opt) {
             case 'a': {
-                // TODO: Add a sb_concat function to sort this mess...
-                String_Builder* add = sb_create(4);
-                sb_append(add,"\t- ");
-                sb_append(add,optarg);
-                sb_append(add,"\n");
-                sb_append(sb,sb_get_string(add));
-                sb_destroy(add);
+                sb_append_format(sb,"\t- %s\n",optarg);
                 sb_save_to_file(sb_get_string(filepath),sb);
                 break;
             }
             case 'd': {
                 size_t index = strtoul(optarg, NULL, 10);
                 sb_delete_line(sb,index);
-                //printf(SB_Fmt,SB_Arg(sb));
                 sb_save_to_file(sb_get_string(filepath),sb);
 
                 return EXIT_SUCCESS;
